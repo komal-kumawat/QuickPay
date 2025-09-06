@@ -1,41 +1,62 @@
-const mongoose = require("mongoose");
+import mongoose, { Schema, Document, Model } from "mongoose";
 
-// users schema
+interface IUser extends Document {
+  username: string;
+  password: string;
+  firstName: string;
+  lastName: string;
+}
 
-const userSchema = new mongoose.Schema({
+const userSchema: Schema<IUser> = new Schema({
   username: {
     type: String,
     required: true,
     unique: true,
     trim: true,
     lowercase: true,
-    minLength: 3,
-    maxLength: 30,
+    minlength: 3,
+    maxlength: 30,
   },
   password: {
     type: String,
     required: true,
     trim: true,
-    maxLength: 50,
+    maxlength: 50,
   },
-
   firstName: {
     type: String,
     required: true,
     trim: true,
-    maxLength: 50,
+    maxlength: 50,
   },
-  lastname: {
+  lastName: {
     type: String,
-    requied: true,
+    required: true,
     trim: true,
-    maxLength: 50,
+    maxlength: 50,
   },
 });
 
-// user model
-const User = mongoose.model("User", userSchema);
+export const User: Model<IUser> = mongoose.model<IUser>("User", userSchema);
 
-module.exports = {
-  User,
-};
+interface IAccount extends Document {
+  userId: mongoose.Types.ObjectId;
+  balance: number;
+}
+
+const accountSchema: Schema<IAccount> = new Schema({
+  userId: {
+    type: Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  balance: {
+    type: Number,
+    required: true,
+  },
+});
+
+export const Account: Model<IAccount> = mongoose.model<IAccount>(
+  "Account",
+  accountSchema
+);
