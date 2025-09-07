@@ -1,4 +1,5 @@
 import { Link, useNavigate } from "react-router-dom";
+import bridgepayLogo from "../assets/bridgepay_main.svg";
 
 export default function Navbar() {
   const navigate = useNavigate();
@@ -9,12 +10,9 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="backdrop-blur-xl bg-white/5 border-b border-white/10 shadow-lg px-6 py-4 flex items-center justify-between sticky top-0 z-50">
-      <Link
-        to="/dashboard"
-        className="text-2xl font-bold bg-gradient-to-r from-blue-500 to-cyan-400 bg-clip-text text-transparent"
-      >
-        BridgePay
+    <nav className="backdrop-blur-xl bg-black/50 border-b border-white/10 shadow-lg px-6 py-4 flex items-center justify-between sticky top-0 z-50">
+      <Link to="/dashboard" className="flex items-center">
+        <img src={bridgepayLogo} alt="BridgePay Logo" className="h-10 w-auto" />
       </Link>
 
       <div className="flex items-center gap-6">
