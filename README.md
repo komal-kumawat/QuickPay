@@ -123,12 +123,6 @@ Contributions are always welcome!
 
 ---
 
-## 📜 License
-
-This project is licensed under the **MIT License** – free to use and modify.
-
----
-
 ✨ With **QuickPay**, managing payments becomes **simple, secure, and fast**!
 
 ---
