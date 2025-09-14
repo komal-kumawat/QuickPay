@@ -1,12 +1,26 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import API from "../api";
+import { useAuth } from "../AuthContext";
+
+interface SigninForm {
+  username: string;
+  password: string;
+}
+
+interface SigninResponse {
+  token: string;
+  firstName: string;
+  lastName: string;
+  name: string;
+}
 
 export default function Signin() {
-  const [form, setForm] = useState({ username: "", password: "" });
+  const [form, setForm] = useState<SigninForm>({ username: "", password: "" });
   const [loading, setLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState("");
   const navigate = useNavigate();
+  const { setUser } = useAuth(); // use context
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -16,17 +30,22 @@ export default function Signin() {
     setLoading(true);
     setErrorMsg("");
     try {
-      const res = await API.post("/user/signin", form);
-      localStorage.setItem("token", res.data.token);
-      navigate("/dashboard");
+      const res = await API.post<SigninResponse>("/user/signin", form);
+
+      // **Update context**
+      setUser(res.data.name, res.data.token);
+
+      navigate("/"); // redirect to dashboard
     } catch (err: any) {
       console.error("Signin error:", err);
-      // try to show a helpful message from server
+
       const serverMsg =
         err?.response?.data?.message ||
         err?.response?.data?.error ||
-        err.message;
-      setErrorMsg(serverMsg || "Signin failed");
+        err.message ||
+        "Signin failed";
+
+      setErrorMsg(serverMsg);
     } finally {
       setLoading(false);
     }

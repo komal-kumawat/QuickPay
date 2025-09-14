@@ -2,20 +2,17 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import Signup from "./pages/Signup";
 import Signin from "./pages/Signin";
 import Dashboard from "./pages/Dashboard";
+import { useAuth } from "./AuthContext";
 
 function App() {
-  const token = localStorage.getItem("token");
+  const { token } = useAuth();
 
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/signup" element={<Signup />} />
-        <Route path="/signin" element={<Signin />} />
-        <Route
-          path="/dashboard"
-          element={token ? <Dashboard /> : <Navigate to="/signin" />}
-        />
-        <Route path="*" element={<Navigate to="/signin" />} />
+        <Route path="/signup" element={!token ? <Signup /> : <Navigate to="/" />} />
+        <Route path="/signin" element={!token ? <Signin /> : <Navigate to="/" />} />
+        <Route path="/" element={<Dashboard/>} />
       </Routes>
     </BrowserRouter>
   );
