@@ -5,7 +5,10 @@ import rootRouter from "./routes/index";
 
 const app = express();
 
-app.use(cors());
+app.use(cors({
+  origin:["https://quick-pay-olive-ten.vercel.app"],
+  credentials:true
+}));
 app.use(express.json());
 
 app.use("/api/v1", rootRouter);
