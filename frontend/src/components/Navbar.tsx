@@ -22,7 +22,7 @@ export default function Navbar() {
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             MozBackgroundClip: "text",
-            MozTextFillColor: "transparent",
+            // MozTextFillColor: "transparent",
           }}
         >
           QuickPay
